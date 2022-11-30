@@ -1,4 +1,8 @@
-import { CheckCircleTwoTone, DownOutlined } from "@ant-design/icons";
+import {
+  CheckCircleTwoTone,
+  CheckOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 import {
   ActionList,
   Avatar,
@@ -13,19 +17,25 @@ import { Skeleton, Table } from "antd";
 import { useState } from "react";
 
 function SecondPage() {
-  const products = new Array(0).fill({
-    sku: 234768459,
-    wix_name: "New Balance 206",
-    amazon_name: "New Balance 2022",
+  const products = new Array(5).fill({}).map((_, i) => {
+    return {
+      key: i,
+      sku: 234768459,
+      wix_name: "New Balance 206",
+      amazon_name: "New Balance 2022",
+    };
   });
   const filterOptions = ["All", "A", "B", "C", "D"];
-  const [selectedFIlter, setSelectedFilter] = useState("Select");
+  const [selectedFilter, setSelectedFilter] = useState("All");
+  const [selectedRows, setSelectedRows] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [columnOpen, setColumnOpen] = useState(
+  const [columnOpen, setColumnOpen] = useState(() =>
     new Array(products?.length).fill(false)
   );
-
+  const [columnsOption, setColumnsOption] = useState(() =>
+    new Array(products?.length).fill("Hidden")
+  );
   return (
     <BodyLayout>
       <Card>
@@ -42,10 +52,13 @@ function SecondPage() {
           </Card>
           <Card>
             <FlexLayout spacing="extraLoose" valign="center">
-              <CheckCircleTwoTone />
-              <TextStyles textcolor="positive" icon={<CheckCircleTwoTone />}>
-                Connected
-              </TextStyles>
+              <Button
+                type="Plain"
+                textcolor="positive"
+                icon={<CheckCircleTwoTone />}
+              >
+                <TextStyles textcolor="positive">Connected</TextStyles>
+              </Button>
               <Avatar></Avatar>
               <Button disable={products?.length === 0 ? true : false}>
                 Save
@@ -69,7 +82,7 @@ function SecondPage() {
                       }}
                       type="Outlined"
                     >
-                      {selectedFIlter}
+                      {selectedFilter}
                     </Button>
                   }
                   open={isOpen}
@@ -142,7 +155,7 @@ function SecondPage() {
                                 }}
                                 type="Outlined"
                               >
-                                Hidden
+                                {columnsOption[idx]}
                               </Button>
                             }
                             open={columnOpen[idx]}
@@ -153,11 +166,37 @@ function SecondPage() {
                                 items: [
                                   {
                                     content: "Hidden",
-                                    onClick: () => {},
+                                    onClick: () => {
+                                      setColumnsOption((prev) => {
+                                        return prev.map((opt, i) => {
+                                          if (i === idx) return "Hidden";
+                                          return opt;
+                                        });
+                                      });
+                                      setColumnOpen((prev) => {
+                                        return prev.map((col, i) => {
+                                          if (i === idx) return false;
+                                          return col;
+                                        });
+                                      });
+                                    },
                                   },
                                   {
                                     content: "Visible",
-                                    onClick: () => {},
+                                    onClick: () => {
+                                      setColumnsOption((prev) => {
+                                        return prev.map((opt, i) => {
+                                          if (i === idx) return "Visible";
+                                          return opt;
+                                        });
+                                      });
+                                      setColumnOpen((prev) => {
+                                        return prev.map((col, i) => {
+                                          if (i === idx) return false;
+                                          return col;
+                                        });
+                                      });
+                                    },
                                   },
                                 ],
                               },
@@ -170,6 +209,12 @@ function SecondPage() {
                 ]}
                 rowSelection={{
                   type: "checkbox",
+                  selectedRowKeys: selectedRows,
+
+                  onChange: (e) => {
+                    console.log(e);
+                    setSelectedRows(e);
+                  },
                 }}
                 dataSource={products}
                 pagination={false}
