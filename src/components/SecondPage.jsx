@@ -30,10 +30,10 @@ function SecondPage() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [columnOpen, setColumnOpen] = useState(() =>
+  const [columnOpen, setColumnOpen] = useState(
     new Array(products?.length).fill(false)
   );
-  const [columnsOption, setColumnsOption] = useState(() =>
+  const [columnsOption, setColumnsOption] = useState(
     new Array(products?.length).fill("Hidden")
   );
   return (
@@ -163,13 +163,13 @@ function SecondPage() {
                             onClose={function noRefCheck() {}}
                             sections={[
                               {
-                                items: [
-                                  {
-                                    content: "Hidden",
+                                items: ["Hidden", "Visible"].map((choice) => {
+                                  return {
+                                    content: choice,
                                     onClick: () => {
                                       setColumnsOption((prev) => {
                                         return prev.map((opt, i) => {
-                                          if (i === idx) return "Hidden";
+                                          if (i === idx) return choice;
                                           return opt;
                                         });
                                       });
@@ -180,25 +180,8 @@ function SecondPage() {
                                         });
                                       });
                                     },
-                                  },
-                                  {
-                                    content: "Visible",
-                                    onClick: () => {
-                                      setColumnsOption((prev) => {
-                                        return prev.map((opt, i) => {
-                                          if (i === idx) return "Visible";
-                                          return opt;
-                                        });
-                                      });
-                                      setColumnOpen((prev) => {
-                                        return prev.map((col, i) => {
-                                          if (i === idx) return false;
-                                          return col;
-                                        });
-                                      });
-                                    },
-                                  },
-                                ],
+                                  };
+                                }),
                               },
                             ]}
                           />
