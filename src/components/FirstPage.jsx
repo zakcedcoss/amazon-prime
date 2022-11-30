@@ -3,7 +3,6 @@ import {
   Button,
   Card,
   FlexLayout,
-  StepWizard,
   TextStyles,
 } from "@cedcommerce/ounce-ui";
 import { Steps } from "antd";

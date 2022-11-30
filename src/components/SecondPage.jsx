@@ -1,8 +1,4 @@
-import {
-  CheckCircleTwoTone,
-  CheckOutlined,
-  DownOutlined,
-} from "@ant-design/icons";
+import { CheckCircleTwoTone, DownOutlined } from "@ant-design/icons";
 import {
   ActionList,
   Avatar,
