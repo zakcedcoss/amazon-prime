@@ -13,11 +13,12 @@ import { Skeleton, Table } from "antd";
 import { useState } from "react";
 
 function SecondPage() {
-  const products = new Array(5).fill({
+  const products = new Array(0).fill({
     sku: 234768459,
     wix_name: "New Balance 206",
     amazon_name: "New Balance 2022",
   });
+  const filterOptions = ["All", "A", "B", "C", "D"];
   const [selectedFIlter, setSelectedFilter] = useState("Select");
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -53,57 +54,43 @@ function SecondPage() {
           </Card>
         </FlexLayout>
       </Card>
-      <Card cardType="Bordered">
-        {products && products?.length !== 0 ? (
-          <>
-            <FlexLayout halign="fill">
-              <ActionList
-                activator={
-                  <Button
-                    icon={<TextStyles content="Filter By:" />}
-                    iconAlign="left"
-                    onClick={() => {
-                      setIsOpen((prev) => !prev);
-                    }}
-                    type="Outlined"
-                  >
-                    {selectedFIlter}
-                  </Button>
-                }
-                open={isOpen}
-                direction="left"
-                onClose={function noRefCheck() {}}
-                sections={[
-                  {
-                    items: [
-                      {
-                        content: "All",
-                        onClick: () => {
-                          setSelectedFilter("All");
-                          setIsOpen(false);
-                        },
-                      },
-                      {
-                        content: "A",
-                        onClick: () => {
-                          setSelectedFilter("A");
-                          setIsOpen(false);
-                        },
-                      },
-                      {
-                        content: "B",
-                        onClick: () => {
-                          setSelectedFilter("B");
-                          setIsOpen(false);
-                        },
-                      },
-                    ],
-                  },
-                ]}
-              />
-              <TextField placeHolder="Search" />
-            </FlexLayout>
-            {!isLoading ? (
+      {!isLoading ? (
+        <Card cardType="Bordered">
+          {products && products?.length !== 0 ? (
+            <>
+              <FlexLayout halign="fill">
+                <ActionList
+                  activator={
+                    <Button
+                      icon={<TextStyles content="Filter By:" />}
+                      iconAlign="left"
+                      onClick={() => {
+                        setIsOpen((prev) => !prev);
+                      }}
+                      type="Outlined"
+                    >
+                      {selectedFIlter}
+                    </Button>
+                  }
+                  open={isOpen}
+                  direction="left"
+                  onClose={function noRefCheck() {}}
+                  sections={[
+                    {
+                      items: filterOptions.map((optn) => {
+                        return {
+                          content: optn,
+                          onClick: () => {
+                            setSelectedFilter(optn);
+                            setIsOpen(false);
+                          },
+                        };
+                      }),
+                    },
+                  ]}
+                />
+                <TextField placeHolder="Search" />
+              </FlexLayout>
               <Table
                 columns={[
                   {
@@ -187,23 +174,23 @@ function SecondPage() {
                 dataSource={products}
                 pagination={false}
               />
-            ) : (
-              <Card>
-                <Skeleton line={3} type="line" rounded="0%" />
-              </Card>
-            )}
-          </>
-        ) : (
-          <Card>
-            <FlexLayout direction="vertical" halign="center" valign="center">
-              <TextStyles type="Heading">
-                We haven't found any products with matching SKU
-              </TextStyles>
-              <a href="#">Learn how to setup Buy with Prime</a>
-            </FlexLayout>
-          </Card>
-        )}
-      </Card>
+            </>
+          ) : (
+            <Card>
+              <FlexLayout direction="vertical" halign="center" valign="center">
+                <TextStyles type="Heading">
+                  We haven't found any products with matching SKU
+                </TextStyles>
+                <a href="#">Learn how to setup Buy with Prime</a>
+              </FlexLayout>
+            </Card>
+          )}
+        </Card>
+      ) : (
+        <Card>
+          <Skeleton line={3} type="line" rounded="0%" />
+        </Card>
+      )}
     </BodyLayout>
   );
 }

@@ -37,8 +37,6 @@ function FirstPage() {
             style={{
               height: "350px",
             }}
-            current={1}
-            percent={30}
             responsive={true}
             direction="vertical"
             items={[
@@ -49,6 +47,7 @@ function FirstPage() {
                   </TextStyles>
                 ),
                 description: <Button>Connect to Amazon</Button>,
+                status: "process",
               },
               {
                 title: (
@@ -63,11 +62,21 @@ function FirstPage() {
                     <a href="#"> how to setup Buy with Prime.</a>
                   </TextStyles>
                 ),
+                status: "process",
               },
               {
-                title: "Save and add your Buy with Prime button",
-                description:
-                  "After saving, Buy with Prime button will be added to the selected product page",
+                title: (
+                  <TextStyles fontweight="bold">
+                    Save and add your Buy with Prime button
+                  </TextStyles>
+                ),
+                description: (
+                  <TextStyles>
+                    After saving, Buy with Prime button will be added to the
+                    selected product page
+                  </TextStyles>
+                ),
+                status: "process",
               },
             ]}
           />
