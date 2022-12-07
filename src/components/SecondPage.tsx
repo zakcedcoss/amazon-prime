@@ -176,7 +176,6 @@ function SecondPage() {
               </TextStyles>
             </FlexLayout>
           </Card>
-
           <Card>
             <FlexLayout spacing="extraLoose" valign="center">
               <ActionList
