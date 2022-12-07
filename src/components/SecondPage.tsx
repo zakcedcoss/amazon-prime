@@ -51,8 +51,6 @@ function SecondPage() {
   const [isDisconnectAccountModelOpen, setIsDisconnectAccountModelOpen] =
     useState<boolean>(false);
 
-  // console.log(columnsOption);
-
   return (
     <BodyLayout>
       {/* live model */}
@@ -163,7 +161,7 @@ function SecondPage() {
           </FlexLayout>
         </Card>
       </Modal>
-      <Card>
+      <FlexLayout direction="vertical" spacing="extraLoose">
         <FlexLayout halign="fill" valign="center">
           <Card>
             <FlexLayout spacing="loose" valign="center">
@@ -213,94 +211,88 @@ function SecondPage() {
             </FlexLayout>
           </Card>
         </FlexLayout>
-      </Card>
-      <Card>
+
         <Alert destroy onClose={() => {}} type="success">
           Your changes were saved, you can now view your Buy with Prime button
           on Product page.
         </Alert>
-      </Card>
-      {!isLoading ? (
-        <Card cardType="Bordered">
-          {products && products?.length !== 0 ? (
-            <>
-              <FlexLayout halign="fill">
-                <TextField
-                  placeHolder="Search Products"
-                  innerSufIcon={<TextStyles content="_ICON_" />}
-                />
-                {selectedRows.length === 0 ? (
-                  <FlexLayout spacing="loose">
-                    <Filter
-                      button="Filters By"
-                      disableApply
-                      filters={[
-                        {
-                          children: (
-                            <Select
-                              options={[
-                                { label: "Option 1", value: "valuedf" },
-                                { label: "Option 2", value: "value" },
-                              ]}
-                              thickness="thin"
-                            />
-                          ),
-                          name: "Select Filter",
-                        },
-                      ]}
-                      heading="Filter Heading"
-                      icon={<TextStyles content="_ICON_" />}
-                      type="Outlined"
-                    />
-                    <Button type="Primary">Save Changes</Button>
-                  </FlexLayout>
-                ) : (
-                  <Button
-                    type="Primary"
-                    onClick={() => setIsUpdateStateModelOpen(true)}
-                  >
-                    Update Button Stats
-                  </Button>
-                )}
-              </FlexLayout>
-              <Table
-                columns={[
-                  {
-                    align: "left",
-                    dataIndex: "sku",
-                    key: "sku",
-                    title: "Matching SKU",
-                    width: 100,
-                  },
-                  {
-                    align: "center",
-                    dataIndex: "wix_name",
-                    key: "wix_name",
-                    title: "Wix Product Name",
-                    width: 200,
-                  },
-                  {
-                    align: "center",
-                    dataIndex: "amazon_name",
-                    key: "amazon_name",
-                    title: "Amazon Product Name",
-                    width: 200,
-                  },
-                  {
-                    align: "center",
-                    dataIndex: "sku",
-                    key: "sku",
-                    title: "Buy with Prime",
-                    width: 150,
-                    render: (a, b, idx) => {
-                      // console.log(a, b);
 
-                      return (
-                        <FlexLayout
-                          direction="vertical"
-                          halign="start"
-                          spacing="loose"
-                        >
+        {!isLoading ? (
+          <Card cardType="Bordered">
+            {products && products?.length !== 0 ? (
+              <>
+                <FlexLayout halign="fill">
+                  <TextField
+                    placeHolder="Search Products"
+                    innerSufIcon={<TextStyles content="_ICON_" />}
+                  />
+                  {selectedRows.length === 0 ? (
+                    <FlexLayout spacing="loose">
+                      <Filter
+                        button="Filters By"
+                        disableApply
+                        filters={[
+                          {
+                            children: (
+                              <Select
+                                options={[
+                                  { label: "Option 1", value: "valuedf" },
+                                  { label: "Option 2", value: "value" },
+                                ]}
+                                thickness="thin"
+                              />
+                            ),
+                            name: "Select Filter",
+                          },
+                        ]}
+                        heading="Filter Heading"
+                        icon={<TextStyles content="_ICON_" />}
+                        type="Outlined"
+                      />
+                      <Button type="Primary">Save Changes</Button>
+                    </FlexLayout>
+                  ) : (
+                    <Button
+                      type="Primary"
+                      onClick={() => setIsUpdateStateModelOpen(true)}
+                    >
+                      Update Button Stats
+                    </Button>
+                  )}
+                </FlexLayout>
+                <Table
+                  columns={[
+                    {
+                      align: "left",
+                      dataIndex: "sku",
+                      key: "sku",
+                      title: "Matching SKU",
+                      width: 100,
+                    },
+                    {
+                      align: "center",
+                      dataIndex: "wix_name",
+                      key: "wix_name",
+                      title: "Wix Product Name",
+                      width: 200,
+                    },
+                    {
+                      align: "center",
+                      dataIndex: "amazon_name",
+                      key: "amazon_name",
+                      title: "Amazon Product Name",
+                      width: 200,
+                    },
+                    {
+                      align: "center",
+                      dataIndex: "sku",
+                      key: "sku",
+                      title: "Buy with Prime",
+                      width: 150,
+                      render: (a, b, idx) => {
+                        // console.log(a, b);
+
+                        return (
                           <ActionList
                             activator={
                               <Button
@@ -352,70 +344,74 @@ function SecondPage() {
                               },
                             ]}
                           />
-                        </FlexLayout>
-                      );
-                    },
-                  },
-                ]}
-                rowSelection={{
-                  type: "checkbox",
-                  selectedRowKeys: selectedRows,
-
-                  onChange: (e: any) => {
-                    setSelectedRows(e);
-                  },
-                }}
-                dataSource={products}
-                pagination={false}
-              />
-              <Card>
-                <Pagination
-                  countPerPage={10}
-                  currentPage={1}
-                  onCountChange={function noRefCheck() {}}
-                  onEnter={function noRefCheck() {}}
-                  onNext={function noRefCheck() {}}
-                  onPrevious={function noRefCheck() {}}
-                  optionPerPage={[
-                    {
-                      label: "10",
-                      value: "10",
-                    },
-                    {
-                      label: "20",
-                      value: "20",
-                    },
-
-                    {
-                      label: "50",
-                      value: "50",
-                    },
-                    {
-                      label: "100",
-                      value: "100",
+                        );
+                      },
                     },
                   ]}
-                  totalPages={20}
-                  totalitem={200}
+                  rowSelection={{
+                    type: "checkbox",
+                    selectedRowKeys: selectedRows,
+
+                    onChange: (e: any) => {
+                      setSelectedRows(e);
+                    },
+                  }}
+                  dataSource={products}
+                  pagination={false}
                 />
+                <Card>
+                  <Pagination
+                    countPerPage={10}
+                    currentPage={1}
+                    onCountChange={function noRefCheck() {}}
+                    onEnter={function noRefCheck() {}}
+                    onNext={function noRefCheck() {}}
+                    onPrevious={function noRefCheck() {}}
+                    optionPerPage={[
+                      {
+                        label: "10",
+                        value: "10",
+                      },
+                      {
+                        label: "20",
+                        value: "20",
+                      },
+
+                      {
+                        label: "50",
+                        value: "50",
+                      },
+                      {
+                        label: "100",
+                        value: "100",
+                      },
+                    ]}
+                    totalPages={20}
+                    totalitem={200}
+                  />
+                </Card>
+              </>
+            ) : (
+              <Card>
+                <FlexLayout
+                  direction="vertical"
+                  halign="center"
+                  valign="center"
+                >
+                  <TextStyles type="Heading">
+                    We haven't found any products with matching SKU
+                  </TextStyles>
+                  <a href="#">Learn how to setup Buy with Prime</a>
+                </FlexLayout>
               </Card>
-            </>
-          ) : (
-            <Card>
-              <FlexLayout direction="vertical" halign="center" valign="center">
-                <TextStyles type="Heading">
-                  We haven't found any products with matching SKU
-                </TextStyles>
-                <a href="#">Learn how to setup Buy with Prime</a>
-              </FlexLayout>
-            </Card>
-          )}
-        </Card>
-      ) : (
-        <Card>
-          <Skeleton line={3} type="line" rounded="0%" />
-        </Card>
-      )}
+            )}
+          </Card>
+        ) : (
+          <Card>
+            <Skeleton line={3} type="line" rounded="0%" />
+          </Card>
+        )}
+      </FlexLayout>
       <PageFooter>
         A CedCommerce Inc. Product @2022. Need Help? <a href="#">Get Support</a>
       </PageFooter>
