@@ -13,6 +13,8 @@ import {
   Filter,
   PageFooter,
   Modal,
+  ButtonDropdown,
+  Alert,
 } from "@cedcommerce/ounce-ui";
 import { Table, Tag } from "antd";
 import { useState } from "react";
@@ -41,12 +43,57 @@ function SecondPage() {
   const [columnsOption, setColumnsOption] = useState<string[]>(
     new Array(products?.length).fill("Hidden")
   );
+  const [veticalDotButtonOpen, setVeticalDotButtonOpen] =
+    useState<boolean>(false);
   // models
   const [isUpdateStateModelOpen, setIsUpdateStateModelOpen] =
     useState<boolean>(false);
+  const [isDisconnectAccountModelOpen, setIsDisconnectAccountModelOpen] =
+    useState<boolean>(false);
+
+  // console.log(columnsOption);
 
   return (
     <BodyLayout>
+      {/* live model */}
+      <Modal
+        open={false}
+        close={() => {}}
+        heading="Buy with Prime is now live"
+        modalSize="small"
+        primaryAction={{
+          content: "Finish",
+        }}
+      >
+        <TextStyles>
+          To view your button you can visit the live site. Keep in mind that the
+          button will not appear in the editor preview.
+        </TextStyles>
+      </Modal>
+      {/* disconnect model */}
+      <Modal
+        open={isDisconnectAccountModelOpen}
+        close={() => {
+          setIsDisconnectAccountModelOpen(false);
+        }}
+        heading="Disconnect your account from Amazon?"
+        modalSize="small"
+        primaryAction={{
+          content: "Disconnect",
+          type: "Danger",
+        }}
+        secondaryAction={{
+          content: "Cancel",
+          loading: false,
+          onClick: () => setIsDisconnectAccountModelOpen(false),
+        }}
+      >
+        <TextStyles>
+          When you disconnect your account from Amazon, all Buy with Prime
+          buttons will be removed from your website
+        </TextStyles>
+      </Modal>
+      {/* updated state model */}
       <Modal
         open={isUpdateStateModelOpen}
         close={() => setIsUpdateStateModelOpen(false)}
@@ -117,7 +164,7 @@ function SecondPage() {
         </Card>
       </Modal>
       <Card>
-        <FlexLayout halign="fill">
+        <FlexLayout halign="fill" valign="center">
           <Card>
             <FlexLayout spacing="loose" valign="center">
               <TextStyles type="Heading">Amazon Buy with Prime</TextStyles>
@@ -131,12 +178,47 @@ function SecondPage() {
               </TextStyles>
             </FlexLayout>
           </Card>
+
           <Card>
             <FlexLayout spacing="extraLoose" valign="center">
-              <Button type="Outlined">⋮</Button>
+              <ActionList
+                open={veticalDotButtonOpen}
+                activator={
+                  <Button
+                    type="Outlined"
+                    onClick={() => setVeticalDotButtonOpen((prev) => !prev)}
+                  >
+                    ⋮
+                  </Button>
+                }
+                direction="right"
+                sections={[
+                  {
+                    items: [
+                      {
+                        content: (
+                          <Button type="DangerOutlined">
+                            Disconnect Account
+                          </Button>
+                        ),
+                        onClick: () => {
+                          setIsDisconnectAccountModelOpen(true);
+                          setVeticalDotButtonOpen(false);
+                        },
+                      },
+                    ],
+                  },
+                ]}
+              />
             </FlexLayout>
           </Card>
         </FlexLayout>
+      </Card>
+      <Card>
+        <Alert destroy onClose={() => {}} type="success">
+          Your changes were saved, you can now view your Buy with Prime button
+          on Product page.
+        </Alert>
       </Card>
       {!isLoading ? (
         <Card cardType="Bordered">
