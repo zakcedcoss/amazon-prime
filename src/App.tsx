@@ -5,7 +5,7 @@ import SecondPage from "./components/SecondPage";
 function App() {
   return (
     <>
-      <FirstPage />
+      {/* <FirstPage /> */}
       <SecondPage />
     </>
   );
