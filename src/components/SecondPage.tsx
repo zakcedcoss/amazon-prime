@@ -350,7 +350,7 @@ function SecondPage() {
                   ]}
                   rowSelection={{
                     type: "checkbox",
-                    // selectedRowKeys: selectedRows,
+                    selectedRowKeys: selectedRows,
 
                     onChange: (e: any) => {
                       setSelectedRows(e);
