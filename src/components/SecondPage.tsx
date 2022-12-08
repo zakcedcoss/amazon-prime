@@ -44,7 +44,7 @@ function SecondPage() {
 
   return (
     <BodyLayout>
-      {/* live model */}
+      {/* live model, api dependent */}
       <Modal
         open={false}
         close={() => {}}
@@ -83,6 +83,7 @@ function SecondPage() {
         </TextStyles>
       </Modal>
       {/* updated state model */}
+      {/* data is static, api dependent */}
       <Modal
         open={isUpdateStateModelOpen}
         close={() => setIsUpdateStateModelOpen(false)}
@@ -349,7 +350,7 @@ function SecondPage() {
                   ]}
                   rowSelection={{
                     type: "checkbox",
-                    selectedRowKeys: selectedRows,
+                    // selectedRowKeys: selectedRows,
 
                     onChange: (e: any) => {
                       setSelectedRows(e);
