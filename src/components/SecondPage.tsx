@@ -40,7 +40,7 @@ function SecondPage() {
       setColumnOpen(new Array(products?.length).fill(false));
       setColumnsOption(new Array(products?.length).fill("Hidden"));
     }
-  }, []);
+  }, [products]);
 
   return (
     <BodyLayout>
@@ -271,8 +271,8 @@ function SecondPage() {
                       dataIndex: "amazon_title",
                       key: "amazon_title",
                       title: "Amazon Product Name",
-                      width: 300,
-                      // USE THIS render METHOD IF WE WANT TO ADD IMAGES BEFORE TITLE
+                      width: 200,
+                      // ***USE THIS render METHOD IF WE WANT TO ADD IMAGES BEFORE TITLE***
                       // render: (title, record) => {
                       //   return (
                       //     <FlexLayout spacing="loose">
