@@ -23,8 +23,8 @@ function FirstPage() {
           </FlexLayout>
         </Card>
 
-        <Alert type="danger">
-          <FlexLayout direction="vertical" valign="start" halign="start">
+        <Alert destroy={false} type="danger">
+          <FlexLayout direction="vertical" valign="start" halign="center">
             <TextStyles>
               Sorry! An error occurred while connecting your Amazon account.
               Please try connecting again.
