@@ -13,36 +13,20 @@ import {
   Filter,
   PageFooter,
   Modal,
-  ButtonDropdown,
   Alert,
+  Avatar,
 } from "@cedcommerce/ounce-ui";
 import { Table, Tag } from "antd";
-import { useState } from "react";
-
-interface ProductsType {
-  key: number;
-  sku: number;
-  wix_name: string;
-  amazon_name: string;
-}
+import { useEffect, useState } from "react";
+import useProducts, { ProductsType } from "../hooks/useProducts";
 
 function SecondPage() {
-  const products: ProductsType[] = new Array(5).fill({}).map((_, i) => {
-    return {
-      key: i,
-      sku: 234768459,
-      wix_name: "New Balance 206",
-      amazon_name: "New Balance 2022",
-    };
-  });
+  const { products, isLoading } = useProducts();
+  // console.log(products); // this products array can be modified according to the need or can be used to take whole data coming from API
+
   const [selectedRows, setSelectedRows] = useState<string[] | number[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [columnOpen, setColumnOpen] = useState<boolean[]>(
-    new Array(products?.length).fill(false)
-  );
-  const [columnsOption, setColumnsOption] = useState<string[]>(
-    new Array(products?.length).fill("Hidden")
-  );
+  const [columnOpen, setColumnOpen] = useState<boolean[]>([]);
+  const [columnsOption, setColumnsOption] = useState<string[]>([]);
   const [veticalDotButtonOpen, setVeticalDotButtonOpen] =
     useState<boolean>(false);
   // models
@@ -50,6 +34,13 @@ function SecondPage() {
     useState<boolean>(false);
   const [isDisconnectAccountModelOpen, setIsDisconnectAccountModelOpen] =
     useState<boolean>(false);
+
+  useEffect(() => {
+    if (products) {
+      setColumnOpen(new Array(products?.length).fill(false));
+      setColumnsOption(new Array(products?.length).fill("Hidden"));
+    }
+  }, []);
 
   return (
     <BodyLayout>
@@ -269,23 +260,32 @@ function SecondPage() {
                       width: 100,
                     },
                     {
-                      align: "center",
-                      dataIndex: "wix_name",
-                      key: "wix_name",
+                      align: "left",
+                      dataIndex: "wix_title",
+                      key: "wix_title",
                       title: "Wix Product Name",
                       width: 200,
                     },
                     {
-                      align: "center",
-                      dataIndex: "amazon_name",
-                      key: "amazon_name",
+                      align: "left",
+                      dataIndex: "amazon_title",
+                      key: "amazon_title",
                       title: "Amazon Product Name",
-                      width: 200,
+                      width: 300,
+                      // USE THIS render METHOD IF WE WANT TO ADD IMAGES BEFORE TITLE
+                      // render: (title, record) => {
+                      //   return (
+                      //     <FlexLayout spacing="loose">
+                      //       <Avatar image={record?.image} color="red" />
+                      //       <TextStyles>{title}</TextStyles>
+                      //     </FlexLayout>
+                      //   );
+                      // },
                     },
                     {
                       align: "center",
-                      dataIndex: "sku",
-                      key: "sku",
+                      dataIndex: "key",
+                      key: "key",
                       title: "Buy with Prime",
                       width: 150,
                       render: (a, b, idx) => {
