@@ -5,45 +5,37 @@ import {
   Card,
   FlexLayout,
   Loader,
-  Modal,
   PageFooter,
   TextStyles,
 } from "@cedcommerce/ounce-ui";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function FirstPage() {
-  const [openLoader, setOpenLoader] = useState<boolean>(false);
-  const [percent, setPercent] = useState<number>(0);
-  const [newTab, setNewTab] = useState<Window | null>();
-  console.log(newTab);
+  const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
 
   function openModal() {
-    const popupWindow = window.open(
-      "https://sellercentral.amazon.in/?" + "&redirect_return_type=app",
-      "popUpWindow",
-      "height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes"
-    );
-    setNewTab(popupWindow);
-  }
-
-  const timer = setInterval(() => {
-    if (newTab?.closed) {
-      console.log("WORKING...");
-      setOpenLoader(true);
-      clearInterval(timer);
+    let target = "_blank";
+    const url = "https://sellercentral.amazon.in/" + "?";
+    const redirect = "&redirect_return_type=app";
+    const settings =
+      "height=500,width=800,left=100,top=100,resizable=no,scrollbars=no,toolbar=yes,menubar=no,location=no,directories=no, status=yes";
+    let popupWindow = window.open(url + redirect, target, settings);
+    if (!popupWindow || popupWindow.closed) {
+      target = "_self";
+      popupWindow = window.open(url + redirect, target, settings);
     }
-  }, 500);
+
+    const timer = setInterval(() => {
+      if (popupWindow?.closed) {
+        console.log("WORKING...");
+        setOpenErrorModal(true);
+        clearInterval(timer);
+      }
+    }, 500);
+  }
 
   return (
     <BodyLayout>
-      {openLoader && (
-        <Loader
-          title="You are all set!"
-          subtitle="Setting up your account"
-          percentage={percent}
-          type="Loader3"
-        />
-      )}
       <FlexLayout spacing="loose" desktopWidth="100">
         <Card>
           <TextStyles type="Heading">Amazon Buy with Prime</TextStyles>
@@ -56,15 +48,21 @@ function FirstPage() {
           </FlexLayout>
         </Card>
 
-        <Alert destroy={false} type="danger">
-          <FlexLayout direction="vertical" valign="start" halign="center">
-            <TextStyles>
-              Sorry! An error occurred while connecting your Amazon account.
-              Please try connecting again.
-            </TextStyles>
-            <a href="#">Wondering what went wrong?</a>
-          </FlexLayout>
-        </Alert>
+        {openErrorModal && (
+          <Alert
+            onClose={() => setOpenErrorModal(false)}
+            destroy={true}
+            type="danger"
+          >
+            <FlexLayout direction="vertical" valign="start" halign="center">
+              <TextStyles>
+                Sorry! An error occurred while connecting your Amazon account.
+                Please try connecting again.
+              </TextStyles>
+              <a href="#">Wondering what went wrong?</a>
+            </FlexLayout>
+          </Alert>
+        )}
 
         <Card cardType="Bordered">
           <Card title="About this integration">
