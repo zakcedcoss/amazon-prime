@@ -5,13 +5,45 @@ import {
   Card,
   FlexLayout,
   Loader,
+  Modal,
   PageFooter,
   TextStyles,
 } from "@cedcommerce/ounce-ui";
+import { useEffect, useState } from "react";
 
 function FirstPage() {
+  const [openLoader, setOpenLoader] = useState<boolean>(false);
+  const [percent, setPercent] = useState<number>(0);
+  const [newTab, setNewTab] = useState<Window | null>();
+  console.log(newTab);
+
+  function openModal() {
+    const popupWindow = window.open(
+      "https://sellercentral.amazon.in/?" + "&redirect_return_type=app",
+      "popUpWindow",
+      "height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes"
+    );
+    setNewTab(popupWindow);
+  }
+
+  const timer = setInterval(() => {
+    if (newTab?.closed) {
+      console.log("WORKING...");
+      setOpenLoader(true);
+      clearInterval(timer);
+    }
+  }, 500);
+
   return (
     <BodyLayout>
+      {openLoader && (
+        <Loader
+          title="You are all set!"
+          subtitle="Setting up your account"
+          percentage={percent}
+          type="Loader3"
+        />
+      )}
       <FlexLayout spacing="loose" desktopWidth="100">
         <Card>
           <TextStyles type="Heading">Amazon Buy with Prime</TextStyles>
@@ -118,7 +150,7 @@ function FirstPage() {
                 your products.
               </TextStyles>
             </FlexLayout>
-            <Button icon={<TextStyles>_ICON_</TextStyles>}>
+            <Button icon={<TextStyles>_ICON_</TextStyles>} onClick={openModal}>
               Connect to Amazon
             </Button>
           </FlexLayout>

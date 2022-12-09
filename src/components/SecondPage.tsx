@@ -22,7 +22,8 @@ import useProducts, { ProductsType } from "../hooks/useProducts";
 
 function SecondPage() {
   const { products, isLoading } = useProducts();
-  // console.log(products); // this products array can be modified according to the need or can be used to take whole data coming from API
+  // console.log(products);
+  // this products array can be modified according to the need or can be used to take whole data coming from API
 
   const [selectedRows, setSelectedRows] = useState<string[] | number[]>([]);
   const [columnOpen, setColumnOpen] = useState<boolean[]>([]);

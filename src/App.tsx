@@ -7,14 +7,8 @@ function App() {
   return (
     <>
       <FirstPage />
-      {/* Successfully Onboarding Loader*/}
-      {/* <Loader
-        title="You are all set!"
-        subtitle="Setting up your account"
-        percentage={75}
-        type="Loader3"
-      /> */}
-      <SecondPage />
+
+      {/* <SecondPage /> */}
     </>
   );
 }
