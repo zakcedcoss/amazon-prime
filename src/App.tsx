@@ -7,7 +7,7 @@ function App() {
     <>
       <FirstPage />
 
-      {/* <SecondPage /> */}
+      <SecondPage />
     </>
   );
 }

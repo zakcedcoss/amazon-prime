@@ -14,6 +14,7 @@ function FirstPage() {
   const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
 
   function openModal() {
+    setOpenErrorModal(false);
     let target = "_blank";
     const url = "https://www.facebook.com/login/" + "?";
     const redirect = "&redirect_return_type=app";
@@ -48,11 +49,7 @@ function FirstPage() {
         </Card>
 
         {openErrorModal && (
-          <Alert
-            onClose={() => setOpenErrorModal(false)}
-            destroy={true}
-            type="danger"
-          >
+          <Alert destroy={false} type="danger">
             <FlexLayout direction="vertical" valign="start" halign="center">
               <TextStyles>
                 Sorry! An error occurred while connecting your Amazon account.
