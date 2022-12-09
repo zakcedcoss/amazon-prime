@@ -27,7 +27,6 @@ function FirstPage() {
 
     const timer = setInterval(() => {
       if (popupWindow?.closed) {
-        console.log("WORKING...");
         setOpenErrorModal(true);
         clearInterval(timer);
       }
