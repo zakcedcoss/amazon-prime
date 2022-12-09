@@ -15,7 +15,7 @@ function FirstPage() {
 
   function openModal() {
     let target = "_blank";
-    const url = "https://sellercentral.amazon.in/" + "?";
+    const url = "https://www.facebook.com/login/" + "?";
     const redirect = "&redirect_return_type=app";
     const settings =
       "height=500,width=800,left=100,top=100,resizable=no,scrollbars=no,toolbar=yes,menubar=no,location=no,directories=no, status=yes";
