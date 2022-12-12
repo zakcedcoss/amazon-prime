@@ -12,9 +12,11 @@ import { useState } from "react";
 
 function FirstPage() {
   const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
+  const [connectButtonLoading, setConnectButtonLoading] = useState(false);
 
   function openModal() {
     setOpenErrorModal(false);
+    setConnectButtonLoading(true);
     let target = "_blank";
     const url = "https://www.facebook.com/login/" + "?";
     const redirect = "&redirect_return_type=app";
@@ -29,6 +31,7 @@ function FirstPage() {
     const timer = setInterval(() => {
       if (popupWindow?.closed) {
         setOpenErrorModal(true);
+        setConnectButtonLoading(false);
         clearInterval(timer);
       }
     }, 500);
@@ -144,7 +147,11 @@ function FirstPage() {
                 your products.
               </TextStyles>
             </FlexLayout>
-            <Button icon={<TextStyles>_ICON_</TextStyles>} onClick={openModal}>
+            <Button
+              icon={<TextStyles>_ICON_</TextStyles>}
+              loading={connectButtonLoading}
+              onClick={openModal}
+            >
               Connect to Amazon
             </Button>
           </FlexLayout>
