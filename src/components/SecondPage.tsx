@@ -14,7 +14,6 @@ import {
   PageFooter,
   Modal,
   Alert,
-  Avatar,
 } from "@cedcommerce/ounce-ui";
 import { Table, Tag } from "antd";
 import { useEffect, useState } from "react";
@@ -35,6 +34,7 @@ function SecondPage() {
     useState<boolean>(false);
   const [isDisconnectAccountModelOpen, setIsDisconnectAccountModelOpen] =
     useState<boolean>(false);
+  const [isSuccessAlertOpen, setIsSuccessAlertOpen] = useState(false);
 
   useEffect(() => {
     if (products) {
@@ -93,7 +93,10 @@ function SecondPage() {
         primaryAction={{
           content: "Update",
           loading: false,
-          onClick: () => {},
+          onClick: () => {
+            setIsUpdateStateModelOpen(false);
+            setIsSuccessAlertOpen(true);
+          },
         }}
         secondaryAction={{
           content: "Cancel",
@@ -204,10 +207,16 @@ function SecondPage() {
           </Card>
         </FlexLayout>
 
-        <Alert destroy onClose={() => {}} type="success">
-          Your changes were saved, you can now view your Buy with Prime button
-          on Product page.
-        </Alert>
+        {isSuccessAlertOpen && (
+          <Alert
+            destroy
+            onClose={() => setIsSuccessAlertOpen(false)}
+            type="success"
+          >
+            Your changes were saved, you can now view your Buy with Prime button
+            on Product page.
+          </Alert>
+        )}
 
         {!isLoading ? (
           <Card cardType="Bordered">
